@@ -12,11 +12,17 @@ function App() {
   const url = "https://api.adviceslip.com/advice";
   const fetchData = async () => {
     try {
+      if (fetchedadvice) {
+        setfetchedadvice("");
+        setLoading(true);
+        console.log("first");
+      }
+
       const response = await fetch(url);
       const { slip } = await response.json();
-      console.log(response);
       setfetchedadvice(slip);
       setLoading(false);
+      console.log("second");
     } catch (error) {
       console.log(error);
       setLoading(false);
