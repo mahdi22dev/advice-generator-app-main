@@ -15,14 +15,12 @@ function App() {
       if (fetchedadvice) {
         setfetchedadvice("");
         setLoading(true);
-        console.log("first");
       }
 
       const response = await fetch(url);
       const { slip } = await response.json();
       setfetchedadvice(slip);
       setLoading(false);
-      console.log("second");
     } catch (error) {
       console.log(error);
       setLoading(false);
