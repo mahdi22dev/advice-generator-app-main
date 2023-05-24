@@ -21,6 +21,7 @@ function App() {
       const { slip } = await response.json();
       setfetchedadvice(slip);
       setLoading(false);
+      console.log(response);
     } catch (error) {
       console.log(error);
       setLoading(false);
