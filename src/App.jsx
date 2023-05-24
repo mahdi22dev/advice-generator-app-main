@@ -19,6 +19,7 @@ function App() {
         setLoading(true);
         setWarning(false);
       }
+      setLoading(true);
       setWarning(false);
       const response = await fetch(url);
       const { slip } = await response.json();
@@ -30,7 +31,6 @@ function App() {
         setWarning(true);
         setfetchedadvice("");
         setLoading(false);
-        setError(false);
         console.log("true try again");
       }
     } catch (error) {
