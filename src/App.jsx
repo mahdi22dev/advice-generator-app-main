@@ -12,45 +12,46 @@ function App() {
   const { id, advice } = fetchedadvice;
   const previd = useRef(null);
   const url = "https://api.adviceslip.com/advice";
-  const fetchData = async () => {
-    try {
-      if (fetchedadvice) {
-        setfetchedadvice("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (fetchedadvice) {
+          setfetchedadvice("");
+          setLoading(true);
+          setWarning(false);
+        }
         setLoading(true);
         setWarning(false);
-      }
-      setLoading(true);
-      setWarning(false);
-      const response = await fetch(url);
-      const { slip } = await response.json();
-      setfetchedadvice(slip);
-      setLoading(false);
-      previd.current = fetchedadvice;
-      // check prevData
-      if (previd.current.id == slip.id) {
-        setWarning(true);
-        setfetchedadvice("");
+        const response = await fetch(url);
+        const { slip } = await response.json();
+        setfetchedadvice(slip);
         setLoading(false);
-        console.log("true try again");
+        previd.current = fetchedadvice;
+        // check prevData
+        if (previd.current.id == slip.id) {
+          setWarning(true);
+          setfetchedadvice("");
+          setLoading(false);
+          console.log("true try again");
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        setError(true);
       }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      setError(true);
-    }
-  };
-  useEffect(() => {
+    };
     fetchData();
   }, []);
   if (warning) {
     return (
-      <section className="container">
-        <div className="advice">
+      <section className='container'>
+        <div className='advice'>
           <p style={{ color: "hsl(150, 100%, 66%)", fontSize: "20px" }}>
             Please try again after few seconds
           </p>
-          <button className="btn advice-btn" onClick={fetchData}>
-            <img src={icondice} alt="" />
+          <button className='btn advice-btn' onClick={fetchData}>
+            <img src={icondice} alt='' />
           </button>
         </div>
       </section>
@@ -58,34 +59,34 @@ function App() {
   }
   if (Error) {
     return (
-      <section className="container">
-        <div className="advice">
+      <section className='container'>
+        <div className='advice'>
           <p style={{ color: "hsl(150, 100%, 66%)" }}>there was an error</p>
-          <button className="btn advice-btn" onClick={fetchData}>
-            <img src={icondice} alt="" />
+          <button className='btn advice-btn' onClick={fetchData}>
+            <img src={icondice} alt='' />
           </button>
         </div>
       </section>
     );
   }
   return (
-    <section className="container">
-      <div className="advice">
-        {Loading && <div class="load"></div>}
+    <section className='container'>
+      <div className='advice'>
+        {Loading && <div class='load'></div>}
         {fetchedadvice && (
           <>
-            <h4 className="advice-id">ADVIDCE #{id}</h4>
-            <q className="quota">{advice}</q>
-            <div className="divider desktop-divider ">
-              <img src={desktopdivider} alt="" />
+            <h4 className='advice-id'>ADVIDCE #{id}</h4>
+            <q className='quota'>{advice}</q>
+            <div className='divider desktop-divider '>
+              <img src={desktopdivider} alt='' />
             </div>
-            <div className="divider mobile-divider ">
-              <img src={mobiledivider} alt="" />
+            <div className='divider mobile-divider '>
+              <img src={mobiledivider} alt='' />
             </div>
           </>
         )}
-        <button className="btn advice-btn" onClick={fetchData}>
-          <img src={icondice} alt="" />
+        <button className='btn advice-btn' onClick={fetchData}>
+          <img src={icondice} alt='' />
         </button>
       </div>
     </section>
