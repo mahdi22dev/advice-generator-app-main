@@ -12,35 +12,34 @@ function App() {
   const { id, advice } = fetchedadvice;
   const previd = useRef(null);
   const url = "https://api.adviceslip.com/advice";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (fetchedadvice) {
-          setfetchedadvice("");
-          setLoading(true);
-          setWarning(false);
-        }
+  const fetchData = async () => {
+    try {
+      if (fetchedadvice) {
+        setfetchedadvice("");
         setLoading(true);
         setWarning(false);
-        const response = await fetch(url);
-        const { slip } = await response.json();
-        setfetchedadvice(slip);
-        setLoading(false);
-        previd.current = fetchedadvice;
-        // check prevData
-        if (previd.current.id == slip.id) {
-          setWarning(true);
-          setfetchedadvice("");
-          setLoading(false);
-          console.log("true try again");
-        }
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        setError(true);
       }
-    };
+      setLoading(true);
+      setWarning(false);
+      const response = await fetch(url);
+      const { slip } = await response.json();
+      setfetchedadvice(slip);
+      setLoading(false);
+      previd.current = fetchedadvice;
+      // check prevData
+      if (previd.current.id == slip.id) {
+        setWarning(true);
+        setfetchedadvice("");
+        setLoading(false);
+        console.log("true try again");
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(true);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
   if (warning) {
